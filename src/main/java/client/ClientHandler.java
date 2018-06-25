@@ -36,19 +36,18 @@ public class ClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, BaseMsg baseMsg) throws Exception {
-        MSGTYPE msgType=baseMsg.getType();
 
-        switch (msgType){
+        switch (baseMsg.type){
             case HEARTBEAT:
                 System.out.println("Client: receive heartbeat form server ...");
                 break;
             case ACTIVATE:
-                ((ActivateMsg)baseMsg).
+                //((ActivateMsg)baseMsg).
                 break;
 
         }
 
-        ReferenceCountUtil.release(msgType);
+        ReferenceCountUtil.release(baseMsg.type);
     }
 
     @Override

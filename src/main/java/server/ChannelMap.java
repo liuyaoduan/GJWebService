@@ -1,6 +1,5 @@
 package server;
 
-import io.netty.channel.Channel;
 import io.netty.channel.socket.SocketChannel;
 
 import java.util.Map;
@@ -14,7 +13,7 @@ public class ChannelMap {
         channelMap.put(clientId,socketChannel);
     }
 
-    public static Channel get(String clientId){
+    public static SocketChannel get(String clientId){
         return channelMap.get(clientId);
     }
 

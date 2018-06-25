@@ -17,7 +17,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, BaseMsg msg) throws Exception {
-        MSGTYPE type = msg.getType();
 
 
     }
