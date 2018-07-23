@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ArrayOfline xmlns="http://schemas.datacontract.org/2004/07/Richeed.GpsPlatform.WebService" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <line>
+        <downLineLength></downLineLength>
+        <downStartTime></downStartTime>
+        <lineId></lineId>
+        <lineName></lineName>
+        <lineType></lineType>
+        <upLineLength></upLineLength>
+        <upStartTime></upStartTime>
+        <upStopTime></upStopTime>
+    </line>
+</ArrayOfline>

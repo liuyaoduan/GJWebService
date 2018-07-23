@@ -10,7 +10,6 @@ public class OpenClient {
         ClientBootstrap bootstrap = new ClientBootstrap(9999, "localhost");
 
         ActivateMsg activateMsg = new ActivateMsg();
-        activateMsg.setClientId(UUID.randomUUID().toString());
         bootstrap.socketChannel.writeAndFlush(activateMsg);
 
 
