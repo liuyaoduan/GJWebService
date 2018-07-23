@@ -6,7 +6,7 @@ public class ActivateMsg extends BaseMsg {
         LOGIN, LOGOUT
     }
 
-    DO what;
-
+    public DO what;
+    public MsgBody body;
 
 }

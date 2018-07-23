@@ -18,6 +18,10 @@ public class ChannelMap {
         return channelMap.get(clientId);
     }
 
+    public static boolean remove(String clientId) {
+        return channelMap.remove(clientId) == null;
+    }
+
     public static void remove(SocketChannel socketChannel){
         for (Map.Entry entry : channelMap.entrySet()){
 
