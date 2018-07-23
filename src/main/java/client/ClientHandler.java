@@ -12,8 +12,6 @@ import io.netty.util.ReferenceCountUtil;
 public class ClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
 
 
-
-
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         super.userEventTriggered(ctx, evt);
