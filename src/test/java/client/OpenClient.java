@@ -1,9 +1,5 @@
 package client;
 
-import common.msg.ActivateMsg;
-
-import java.util.UUID;
-
 public class OpenClient {
 
     public static void main(String[] args) {

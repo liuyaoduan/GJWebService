@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<message>
+    <head>clientid</head>
+    <head>type</head>
+
+    <type>activation</type>
+    <type>heartbeat</type>
+
+    <body>result</body>
+    <body>status</body>
+</message>

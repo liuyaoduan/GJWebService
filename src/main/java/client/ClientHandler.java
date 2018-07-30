@@ -1,15 +1,13 @@
 package client;
 
-import common.msg.ActivateMsg;
-import common.msg.BaseMsg;
-import common.msg.MSGTYPE;
-import common.msg.HeartBeatMsg;
+import common.msg.Message;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
+import common.msg.MsgConstants;
 
-public class ClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
+public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
 
     @Override
@@ -20,9 +18,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
             IdleStateEvent e = (IdleStateEvent) evt;
             switch (e.state()) {
                 case WRITER_IDLE:
-                    HeartBeatMsg heartBeatMsg =new HeartBeatMsg(HeartBeatMsg.TO.SERVER);
-                    ctx.writeAndFlush(heartBeatMsg);
-                    System.out.println("Client: send heartbeat to server ...");
+                    Message message = Message.heartbeat("0001");
+                    ctx.writeAndFlush(message);
+                    System.out.printf("Client %s: send heartbeat to server ...\n", message.getValueByTagName("clientid"));
                     break;
                 default:
                     break;
@@ -33,19 +31,19 @@ public class ClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
 
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, BaseMsg msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg) throws Exception {
 
-        switch (msg.type){
-            case HEARTBEAT:
-                System.out.printf("Client %s: receive heartbeat form server ...\n", msg.clientId);
+        switch (msg.getType()){
+            case MsgConstants.HEARTBEAT:
+                System.out.printf("Client %s: receive heartbeat form server ...\n", msg.getValueByTagName("clientid"));
                 break;
-            case ACTIVATE:
-                ((ActivateMsg)msg).
+            case MsgConstants.ACTIVATION:
+
                 break;
 
         }
 
-        ReferenceCountUtil.release(msg.type);
+        ReferenceCountUtil.release(msg);
     }
 
     @Override

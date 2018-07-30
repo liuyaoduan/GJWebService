@@ -1,14 +1,12 @@
 package server;
 
-import common.msg.ActivateMsg;
-import common.msg.BaseMsg;
-import common.msg.HeartBeatMsg;
-import common.msg.MSGTYPE;
+import common.msg.Message;
+import common.msg.MsgConstants;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
 
-public class ServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
+public class ServerHandler extends SimpleChannelInboundHandler<Message> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
@@ -18,21 +16,22 @@ public class ServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, BaseMsg msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
 
-        switch (msg.type) {
-            case ACTIVATE:
-                ActivateMsg activateMsg = (ActivateMsg) msg;
-                if (activateMsg.what == ActivateMsg.DO.LOGIN) {
-                    // TODO
-                    ChannelMap.add(msg.clientId, (SocketChannel) ctx.channel());
-                } else if (activateMsg.what == ActivateMsg.DO.LOGOUT) {
-                    ChannelMap.remove(msg.clientId);
+        switch (msg.getType()) {
+            case MsgConstants.ACTIVATION:
+
+                if (msg.getValueByTagName(MsgConstants.LOGIN_LOGOUT).equals(MsgConstants.LOGIN)) {
+                    ChannelMap.add(msg.getValueByTagName(MsgConstants.CLIENTID), (SocketChannel) ctx.channel());
+                } else {
+                    ChannelMap.remove(msg.getValueByTagName(MsgConstants.CLIENTID));
                 }
 
-                activateMsg.body
+                msg.addBodyElement("")
+
+
                 break;
-            case HEARTBEAT:
+            case MsgConstants.HEARTBEAT:
                 System.out.printf("Server: receive heartbeat form client %s ...\n", msg.clientId);
                 ChannelMap.get(msg.clientId).writeAndFlush(new HeartBeatMsg());
                 break;
