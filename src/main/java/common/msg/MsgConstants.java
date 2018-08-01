@@ -11,6 +11,8 @@ public interface MsgConstants {
     String LOGIN= "login";
     String LOGOUT = "logout";
 
-    //public static final String HEARTBEAT = "heartbeat";
+    String RESULT = "result";
+    String DATA = "data";
+    String OK = "ok";
 
 }

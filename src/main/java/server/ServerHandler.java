@@ -16,24 +16,25 @@ public class ServerHandler extends SimpleChannelInboundHandler<Message> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, Message msg) {
+
+        String clientId = msg.getValueByTagName(MsgConstants.CLIENTID);
 
         switch (msg.getType()) {
             case MsgConstants.ACTIVATION:
 
                 if (msg.getValueByTagName(MsgConstants.LOGIN_LOGOUT).equals(MsgConstants.LOGIN)) {
-                    ChannelMap.add(msg.getValueByTagName(MsgConstants.CLIENTID), (SocketChannel) ctx.channel());
+                    ChannelMap.add(clientId, (SocketChannel) ctx.channel());
                 } else {
-                    ChannelMap.remove(msg.getValueByTagName(MsgConstants.CLIENTID));
+                    ChannelMap.remove(clientId);
                 }
 
-                msg.addBodyElement("")
-
+                msg.addBodyElement(MsgConstants.RESULT, MsgConstants.OK);
 
                 break;
             case MsgConstants.HEARTBEAT:
-                System.out.printf("Server: receive heartbeat form client %s ...\n", msg.clientId);
-                ChannelMap.get(msg.clientId).writeAndFlush(new HeartBeatMsg());
+                System.out.printf("Server: receive heartbeat form client %s ...\n", clientId);
+                ChannelMap.get(clientId).writeAndFlush(Message.heartbeat(clientId));
                 break;
 
         }

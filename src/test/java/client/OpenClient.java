@@ -1,12 +1,17 @@
 package client;
 
+import common.msg.Message;
+import common.msg.MsgConstants;
+
+import java.util.UUID;
+
 public class OpenClient {
 
     public static void main(String[] args) {
-        ClientBootstrap bootstrap = new ClientBootstrap(9999, "localhost");
+        String clientId = UUID.randomUUID().toString();
 
-        ActivateMsg activateMsg = new ActivateMsg();
-        bootstrap.socketChannel.writeAndFlush(activateMsg);
+        ClientBootstrap bootstrap = new ClientBootstrap("localhost", 9999).setClientId(clientId);
+        bootstrap.socketChannel.writeAndFlush(Message.activation(clientId, MsgConstants.LOGIN));
 
 
     }

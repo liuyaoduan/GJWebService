@@ -1,5 +1,6 @@
 package client;
 
+import common.msg.Message;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -16,12 +17,19 @@ public class ClientBootstrap {
 
     int port;
     String host;
+
+    String clientId;
     SocketChannel socketChannel;
 
-    public ClientBootstrap(int port, String host) {
-        this.port = port;
+    public ClientBootstrap(String host, int port) {
         this.host = host;
+        this.port = port;
         start();
+    }
+
+    public ClientBootstrap setClientId(String clientId) {
+        this.clientId = clientId;
+        return this;
     }
 
     private void start() {
@@ -49,6 +57,8 @@ public class ClientBootstrap {
                 if (channelFuture.isSuccess()) {
                     socketChannel = (SocketChannel) channelFuture.channel();
                     System.out.println("Client: server connected!");
+
+                    socketChannel.writeAndFlush(Message.heartbeat(ClientBootstrap.this.clientId));
                 }
 
             }

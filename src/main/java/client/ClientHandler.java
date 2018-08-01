@@ -7,6 +7,8 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import common.msg.MsgConstants;
 
+import java.util.UUID;
+
 public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
 
@@ -18,9 +20,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
             IdleStateEvent e = (IdleStateEvent) evt;
             switch (e.state()) {
                 case WRITER_IDLE:
-                    Message message = Message.heartbeat("0001");
+                    String clientId = UUID.randomUUID().toString();
+                    Message message = Message.heartbeat(clientId);
                     ctx.writeAndFlush(message);
-                    System.out.printf("Client %s: send heartbeat to server ...\n", message.getValueByTagName("clientid"));
+                    System.out.printf("Client %s: send heartbeat to server ...\n", clientId);
                     break;
                 default:
                     break;
@@ -31,11 +34,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg) {
 
         switch (msg.getType()){
             case MsgConstants.HEARTBEAT:
-                System.out.printf("Client %s: receive heartbeat form server ...\n", msg.getValueByTagName("clientid"));
+                System.out.printf("Client %s: receive heartbeat form server ...\n", msg.getValueByTagName(MsgConstants.CLIENTID));
                 break;
             case MsgConstants.ACTIVATION:
 

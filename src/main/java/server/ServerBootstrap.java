@@ -10,10 +10,10 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 
 public class ServerBootstrap {
     int port;
-    SocketChannel socketChannel;
 
     public ServerBootstrap(int port) {
         this.port = port;
+        this.bind();
     }
 
     private void bind() {

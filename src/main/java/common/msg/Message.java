@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class Message implements Serializable {
 
-
     private SOAPMessage soap;
 
     public static Message obtain() {
@@ -29,10 +28,10 @@ public class Message implements Serializable {
         Map<String, String> body = new HashMap<String, String>();
 
 
-        head.put("type", MsgConstants.HEARTBEAT);
+        head.put(MsgConstants.TYPE, MsgConstants.HEARTBEAT);
         message.setHeader(head);
 
-        body.put("clientid", clientId);
+        body.put(MsgConstants.CLIENTID, clientId);
         message.setBody(body);
 
         return message;
@@ -45,11 +44,11 @@ public class Message implements Serializable {
         Map<String, String> body = new HashMap<String, String>();
 
 
-        head.put("type", MsgConstants.ACTIVATION);
-        head.put("login_logout", login_logout);
+        head.put(MsgConstants.TYPE, MsgConstants.ACTIVATION);
+        head.put(MsgConstants.LOGIN_LOGOUT, login_logout);
         message.setHeader(head);
 
-        body.put("clientid", clientId);
+        body.put(MsgConstants.CLIENTID, clientId);
         message.setBody(body);
 
         return message;

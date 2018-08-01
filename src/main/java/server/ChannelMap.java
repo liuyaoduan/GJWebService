@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChannelMap {
     private static Map<String, SocketChannel> channelMap = new ConcurrentHashMap<>();
 
-
     public static void add(String clientId,SocketChannel socketChannel){
         channelMap.put(clientId,socketChannel);
     }
